@@ -1,6 +1,6 @@
 //*****************************************************************
 //  RollSystem.cpp
-//	A small class-roll maintenance system
+//  A small class-roll maintenance system
 //
 //  Programmers: Ryan Binder, Constance Luong, Elin Cheung, 
 //				 Wesam Ali, Alexander Mas
@@ -49,6 +49,21 @@ using namespace std;
 // editName function will edit student's name
 //******************************************************************
 
+//******************************************************************
+// editId function will edit student's UID
+//******************************************************************
+
+//******************************************************************
+// editEmail function will edit student's email
+//******************************************************************
+
+//******************************************************************
+// editGrades function will edit student's grades
+//
+// !! Could make user input all grades every time, OR split this into
+// individual functions (ie. editProjectGrade, ...) and prompt user
+// for what grade they would like to edit !!
+//******************************************************************
 
 //******************************************************************
 // editStudent function will find student by searchById
