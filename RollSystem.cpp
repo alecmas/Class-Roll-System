@@ -72,7 +72,6 @@ using namespace std;
 //******************************************************************
 
 int main() {
-
 	cout << "This is going to be a class-roll maintenance system." << endl;
 
 	return 0;
