@@ -1,4 +1,4 @@
-# Class-Roll-System
+# Roll-System
 A small class-roll maintenance system
 
 Programmers: Ryan Binder, Constance Luong, Elin Cheung, Wesam Ali, Alexander Mas
