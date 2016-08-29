@@ -3,7 +3,7 @@
 //  A small class-roll maintenance system
 //
 //  Programmers: Ryan Binder, Constance Luong, Elin Cheung, 
-//				 Wesam Ali, Alexander Mas
+//		 Wesam Ali, Alexander Mas
 //
 //  This file contains the student class and all functions
 //*****************************************************************
