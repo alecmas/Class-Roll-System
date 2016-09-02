@@ -18,3 +18,8 @@ Capabilities:
 	- Retrieve student data based on search by name, ID, or email  
 	- Update any or all data fields  
 
+## Log
+	09/01/2016 (Alec)
+	- Created RollSystem class  
+	- Implemented constructor  
+	- Implemented hash, addStudent, numberOfStudentsInIndex, and displayStudents functions 
