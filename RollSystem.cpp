@@ -46,7 +46,7 @@ RollSystem::RollSystem() {
 	for (int i = 0; i < TABLE_SIZE; i++) {
 		HashTable[i] = new student;
 		HashTable[i]->name = "name";
-		HashTable[i]->usfId = 0000000000;
+		HashTable[i]->usfId = 0;
 		HashTable[i]->email = "email";
 		HashTable[i]->presGrade = 0;
 		HashTable[i]->e1Grade = 0;
