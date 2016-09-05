@@ -19,11 +19,11 @@ using namespace std;
 //******************************************************************
 class RollSystem {
 public:
-	static const int TABLE_SIZE = 10;
+	static const int TABLE_SIZE = 4;
 
 	struct student {
 		string name;
-		int usfId;
+		string usfId;
 		string email;
 		int presGrade, e1Grade, e2Grade, projGrade;
 		student* next;
@@ -33,9 +33,10 @@ public:
 
 	RollSystem();
 	int hash(string key);
-	void addStudent(string name, int usfId, string email);
+	void addStudent(string name, string usfId, string email);
 	int numberOfStudentsInIndex(int index);
 	void displayStudents();
+	void searchByName(string name);
 };
 
 //******************************************************************
@@ -46,7 +47,7 @@ RollSystem::RollSystem() {
 	for (int i = 0; i < TABLE_SIZE; i++) {
 		HashTable[i] = new student;
 		HashTable[i]->name = "name";
-		HashTable[i]->usfId = 0;
+		HashTable[i]->usfId = "0";
 		HashTable[i]->email = "email";
 		HashTable[i]->presGrade = 0;
 		HashTable[i]->e1Grade = 0;
@@ -77,13 +78,17 @@ int RollSystem::hash(string key) {
 // addStudent function will create a student
 // and add that student to the system
 //******************************************************************
-void RollSystem::addStudent(string name, int usfId, string email) {
+void RollSystem::addStudent(string name, string usfId, string email) {
 	int index = hash(name);
 
 	if (HashTable[index]->name == "name") {
 		HashTable[index]->name = name;
 		HashTable[index]->usfId = usfId;
 		HashTable[index]->email = email;
+		HashTable[index]->presGrade = 0;
+		HashTable[index]->e1Grade = 0;
+		HashTable[index]->e2Grade = 0;
+		HashTable[index]->projGrade = 0;
 	}
 	else {
 		student* ptr = HashTable[index];
@@ -91,6 +96,10 @@ void RollSystem::addStudent(string name, int usfId, string email) {
 		n->name = name;
 		n->usfId = usfId;
 		n->email = email;
+		n->presGrade = 0;
+		n->e1Grade = 0;
+		n->e2Grade = 0;
+		n->projGrade = 0;
 		n->next = NULL;
 
 		while (ptr->next != NULL) {
@@ -156,15 +165,78 @@ void RollSystem::displayStudents() {
 //
 // !! Need to consider duplicates !!
 //******************************************************************
+void RollSystem::searchByName(string name) {
+	int index = hash(name);
+	bool foundName = false;
+	string usfId, email;
+	int presGrade, e1Grade, e2Grade, projGrade;
+
+
+	student* ptr = HashTable[index];
+
+	// if the first entry in bucket is a match
+	if (HashTable[index]->name == name) {
+		foundName = true;
+		usfId = ptr->usfId;
+		email = ptr->email;
+		presGrade = ptr->presGrade;
+		e1Grade = ptr->e1Grade;
+		e2Grade = ptr->e2Grade;
+		projGrade = ptr->projGrade;
+	}
+
+	// otherwise, search the bucket
+	while (ptr->next != NULL) {
+		if (ptr->name == name) {
+			foundName = true;
+			usfId = ptr->usfId;
+			email = ptr->email;
+			presGrade = ptr->presGrade;
+			e1Grade = ptr->e1Grade;
+			e2Grade = ptr->e2Grade;
+			projGrade = ptr->projGrade;
+		}
+
+		ptr = ptr->next;
+	}
+
+	// if the name was found, print that student's info
+	if (foundName == true) {
+		cout << "-----------------\n";
+		cout << "INFO" << endl;
+		cout << "-----------------\n";
+		cout << "Name: " << name << endl;
+		cout << "UID: " << usfId << endl;
+		cout << "Email: " << email << endl;
+		cout << "-----------------\n";
+		cout << "GRADES" << endl;
+		cout << "-----------------\n";
+		cout << "Presentation Grade: " << presGrade << endl;
+		cout << "Essay 1 Grade: " << e1Grade << endl;
+		cout << "Essay 2 Grade: " << e2Grade << endl;
+		cout << "Project Grade: " << projGrade << endl;
+		cout << endl;
+	}
+	// otherwise print error message
+	else {
+		cout << name << "'s info was not found in the Roll System" << endl;
+		cout << endl;
+	}
+}
 
 //******************************************************************
 // searchById function will search system for student 
 // by their UID
+//
+// !! This will be difficult because we need to search by value !!
+// !! instead of key !!
 //******************************************************************
 
 //******************************************************************
 // searchByEmail function will search system for student
 // by their email
+//
+// !! Should be like searchById function !!
 //******************************************************************
 
 //******************************************************************
@@ -196,9 +268,14 @@ void RollSystem::displayStudents() {
 int main() {
 	RollSystem classRoll;
 
-	classRoll.addStudent("Alec", 70351384, "alexanderm@mail.usf.edu");
-
+	classRoll.addStudent("Alexander", "70351384", "alexanderm@mail.usf.edu");
+	classRoll.addStudent("Geoffrey", "92801743", "gkohlhase@mail.usf.edu");
+	classRoll.addStudent("David", "1766534", "davidcap@mail.usf.edu");
 	classRoll.displayStudents();
+
+	classRoll.searchByName("Alexander");
+	classRoll.searchByName("Geoffrey");
+	classRoll.searchByName("Bill");
 
 	return 0;
 }
