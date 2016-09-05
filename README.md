@@ -22,4 +22,7 @@ Capabilities:
 	09/01/2016 (Alec)
 	- Created RollSystem class  
 	- Implemented constructor  
-	- Implemented hash, addStudent, numberOfStudentsInIndex, and displayStudents functions 
+	- Implemented hash, addStudent, numberOfStudentsInIndex, and displayStudents functions  
+
+	09/04/2016 (Alec)  
+	- Implemented searchByName function
