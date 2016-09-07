@@ -21,8 +21,6 @@ Capabilities:
 ## Log
 	09/01/2016 (Alec)
 	- Created RollSystem class  
-	- Implemented constructor  
-	- <del>Implemented hash and numberOfStudentsInIndex</del>
 	- Implemented addStudent and displayStudents functions  
 
 	09/04/2016 (Alec)  
@@ -30,7 +28,6 @@ Capabilities:
 	
 	09/06/2016 (Alec)
 	- Scrapped hash table implementation for a vector implementation (will be easier to search multiple ways)  
-	- Scrapped hash and numberOfStudentsInIndex functions associated with hash table implementation  
 	- Implemented basic main menu system using while loop and switch statements  
 	- Implemented removeStudent, searchByName, searchById, searchByEmail, and displayMenu functions 
 	- Started implementation of editStudent (still need to allow grade edits)  
