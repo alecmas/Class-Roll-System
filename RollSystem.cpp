@@ -290,6 +290,9 @@ void RollSystem::displayMenu() {
 	cout << "6. Exit the system" << endl;
 }
 
+//******************************************************************
+// MAIN FUNCTION
+//******************************************************************
 int main() {
 	// create system
 	RollSystem classRoll;
