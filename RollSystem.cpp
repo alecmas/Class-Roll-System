@@ -5,7 +5,7 @@
 //  Programmers: Ryan Binder, Constance Luong, Elin Cheung, 
 //		 Wesam Ali, Alexander Mas
 //
-//  This file contains the student class and all functions
+//  This file contains the RollSystem class and all functions
 //*****************************************************************
 
 #include <cstdlib>
