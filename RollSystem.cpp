@@ -12,6 +12,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -21,12 +22,17 @@ using namespace std;
 class RollSystem {
 public:
 	struct student {
+		// up to 40 characters
 		string name;
+		// 10 characters
 		string usfId;
+		// up to 40 characters
 		string email;
+		// value from 0 (F) to 4 (A)
 		int presGrade, e1Grade, e2Grade, projGrade;
 	};
 
+	// vector to hold students
 	vector<student> students;
 
 	void addStudent(string name, string usfId, string email);
@@ -44,36 +50,51 @@ public:
 // and add that student to the system
 //******************************************************************
 void RollSystem::addStudent(string name, string usfId, string email) {
+	// variable to check if id is already in system
 	bool duplicateId = false;
+	// variable to check if email is already in system
 	bool duplicateEmail = false;
 
-	student newStudent;
-	newStudent.name = name;
-	newStudent.usfId = usfId;
-	newStudent.email = email;
-	newStudent.presGrade = 0;
-	newStudent.e1Grade = 0;
-	newStudent.e2Grade = 0;
-	newStudent.projGrade = 0;
-
+	// iterate through the vector to see if there are any duplicate ids or emails
 	for (int i = 0; i < students.size(); i++) {
-		if (students[i].usfId == newStudent.usfId) {
+		if (students[i].usfId == usfId) {
 			duplicateId = true;
 		}
-		if (students[i].email == newStudent.email) {
+		if (students[i].email == email) {
 			duplicateEmail = true;
 		}
 	}
 
 	if (duplicateId == true) {
-		cout << "ERROR: a student with that UID is already in the system." << endl;
+		cout << "ERROR: a student with that UID is already in the system.";
 	}
 	else if (duplicateEmail == true) {
-		cout << "ERROR: a student with that email is already in the system." << endl;
+		cout << "ERROR: a student with that email is already in the system.";
 	}
+	// if there were no duplicate ids or emails
 	else {
+		// create student
+		student newStudent;
+
+		// transform user's name input to all lowercase to eliminate case-sensitivity issues
+		transform(name.begin(), name.end(), name.begin(), ::tolower);
+
+		// transform user's email input to all lowercase to eliminate case-sensitivity issues
+		transform(email.begin(), email.end(), email.begin(), ::tolower);
+
+		newStudent.name = name;
+		newStudent.usfId = usfId;
+		newStudent.email = email;
+
+		// set initial grades to 0
+		newStudent.presGrade = 0;
+		newStudent.e1Grade = 0;
+		newStudent.e2Grade = 0;
+		newStudent.projGrade = 0;
+
+		// push new student onto the end of the students vector
 		students.push_back(newStudent);
-		cout << "Student added!" << endl;
+		cout << "Student added!";
 	}
 }
 
@@ -82,12 +103,14 @@ void RollSystem::addStudent(string name, string usfId, string email) {
 // in the system, as well as their data
 //******************************************************************
 void RollSystem::displayStudents() {
+	// variable to keep count of students in system
 	int count = 0;
 
 	cout << "---------------------------\n";
 	cout << "STUDENTS" << endl;
 	cout << "----------------------------\n";
 
+	// iterate through students vector and print all students
 	for (int i = 0; i < students.size(); i++) {
 		count++;
 		cout << "Name:  " << students[i].name << endl;
@@ -98,11 +121,11 @@ void RollSystem::displayStudents() {
 
 	if (count == 0) {
 		cout << "System contains no students." << endl;
-		cout << "----------------------------\n";
+		cout << "----------------------------";
 	}
 	else {
 		cout << "TOTAL STUDENTS: " << count << endl;
-		cout << "----------------------------\n";
+		cout << "----------------------------";
 	}
 }
 
@@ -111,9 +134,15 @@ void RollSystem::displayStudents() {
 // by their name
 //******************************************************************
 void RollSystem::searchByName(string name) {
+	// variable to check if name is in system
 	bool foundName = false;
 
+	// transform user's name input to lowercase to eliminate case-sensitivity issues
+	transform(name.begin(), name.end(), name.begin(), ::tolower);
+
+	// iterate through students vector to find a matching name
 	for (int i = 0; i < students.size(); i++) {
+		// compare names, which are now both lowercase
 		if (students[i].name == name) {
 			foundName = true;
 
@@ -131,11 +160,12 @@ void RollSystem::searchByName(string name) {
 			cout << "Essay 1 Grade: " << students[i].e1Grade << endl;
 			cout << "Essay 2 Grade: " << students[i].e2Grade << endl;
 			cout << "Project Grade: " << students[i].projGrade << endl;
+			cout << "----------------------------";
 		}
 	}
 
 	if (foundName == false) {
-		cout << "Student \"" << name << "\" not found in the system." << endl;
+		cout << "Student \"" << name << "\" not found in the system.";
 	}
 }
 
@@ -144,8 +174,10 @@ void RollSystem::searchByName(string name) {
 // by their UID
 //******************************************************************
 void RollSystem::searchById(string usfId) {
+	// variable to check if id is in system
 	bool foundId = false;
 
+	// iterate through students vector to find a matching id
 	for (int i = 0; i < students.size(); i++) {
 		if (students[i].usfId == usfId) {
 			foundId = true;
@@ -163,11 +195,12 @@ void RollSystem::searchById(string usfId) {
 			cout << "Essay 1 Grade: " << students[i].e1Grade << endl;
 			cout << "Essay 2 Grade: " << students[i].e2Grade << endl;
 			cout << "Project Grade: " << students[i].projGrade << endl;
+			cout << "----------------------------";
 		}
 	}
 
 	if (foundId == false) {
-		cout << "UID " << usfId << " not found in the system." << endl;
+		cout << "UID " << usfId << " not found in the system.";
 	}
 }
 
@@ -176,8 +209,13 @@ void RollSystem::searchById(string usfId) {
 // by their email
 //******************************************************************
 void RollSystem::searchByEmail(string email) {
+	// variable to check if email is in system
 	bool foundEmail = false;
 
+	// transform user's email input to all lowercase to eliminate case-sensitivity issues
+	transform(email.begin(), email.end(), email.begin(), ::tolower);
+
+	// iterate through students vector to find a matching email
 	for (int i = 0; i < students.size(); i++) {
 		if (students[i].email == email) {
 			foundEmail = true;
@@ -195,11 +233,12 @@ void RollSystem::searchByEmail(string email) {
 			cout << "Essay 1 Grade: " << students[i].e1Grade << endl;
 			cout << "Essay 2 Grade: " << students[i].e2Grade << endl;
 			cout << "Project Grade: " << students[i].projGrade << endl;
+			cout << "----------------------------";
 		}
 	}
 
 	if (foundEmail == false) {
-		cout << "Email \"" << email << "\" not found in the system." << endl;
+		cout << "Email \"" << email << "\" not found in the system.";
 	}
 }
 
@@ -210,9 +249,12 @@ void RollSystem::searchByEmail(string email) {
 // !! May add functionality to remove by name and/or email !!
 //******************************************************************
 void RollSystem::removeStudent(string usfId) {
+	// variable to make sure student is in the system
 	bool foundStudent = false;
+	// variable to hold index of the student to be removed
 	int indexToRemove;
 
+	// iterate through students vector to find the student to be removed
 	for (int i = 0; i < students.size(); i++) {
 		if (students[i].usfId == usfId) {
 			foundStudent = true;
@@ -221,11 +263,12 @@ void RollSystem::removeStudent(string usfId) {
 	}
 
 	if (foundStudent == false) {
-		cout << "ERROR: student you wish to remove is not in the system" << endl;
+		cout << "ERROR: student you wish to remove is not in the system";
 	}
 	else {
+		// erase the student at the saved index
 		students.erase(students.begin() + indexToRemove);
-		cout << "Removal successful!" << endl;
+		cout << "Removal successful!";
 	}
 }
 
@@ -241,15 +284,17 @@ void RollSystem::removeStudent(string usfId) {
 // editStudent function will find student by UID and then 
 // allow user to reenter student information or editGrades
 //
-// !! Still needs editGrades function implemented !!
-//
 // !! May add functionality to search by name and/or email !!
 //******************************************************************
 void RollSystem::editStudent(string usfId) {
+	// variable to make sure student is in the system
 	bool foundStudent = false;
+	// variable to save the index of the student to be edited
 	int indexToEdit = 0;
+	// variables for the new information
 	string newName, newId, newEmail;
 
+	// iterate through students vector to find the student to be edited
 	for (int i = 0; i < students.size(); i++) {
 		if (students[i].usfId == usfId) {
 			foundStudent = true;
@@ -258,24 +303,25 @@ void RollSystem::editStudent(string usfId) {
 	}
 
 	if (foundStudent == false) {
-		cout << "ERROR: student you wish to edit was not found." << endl;
+		cout << "ERROR: student you wish to edit was not found.";
 	}
 	else {
-		cout << "Name: ";
-		cin >> newName;
-		cout << "UID: ";
-		cin >> newId;
-		cout << "Email: ";
-		cin >> newEmail;
+		cout << "New name: ";
+		getline(cin, newName);
+		cout << "New UID: ";
+		getline(cin, newId);
+		cout << "New email: ";
+		getline(cin, newEmail);
 
+		// update information of the student at the saved index
 		students[indexToEdit].name = newName;
 		students[indexToEdit].usfId = newId;
 		students[indexToEdit].email = newEmail;
 
-		cout << "Edit successful!" << endl;
+		cout << "Edit successful!";
 	}
 
-	// editGrades
+	// EDIT GRADES FUNCTIONALIY WILL GO HERE?
 }
 
 //******************************************************************
@@ -287,9 +333,11 @@ void RollSystem::displayMenu() {
 	cout << "1. Display students in system" << endl;
 	cout << "2. Add student" << endl;
 	cout << "3. Remove student" << endl;
-	cout << "4. Search for student" << endl;
-	cout << "5. Edit student" << endl;
-	cout << "6. Exit the system" << endl;
+	cout << "4. Search for student by name" << endl;
+	cout << "5. Search for student by UID" << endl;
+	cout << "6. Search for student by email" << endl;
+	cout << "7. Edit student" << endl;
+	cout << "8. Exit system" << endl;
 }
 
 //******************************************************************
@@ -299,9 +347,7 @@ int main() {
 	// create system
 	RollSystem classRoll;
 	// command input for main menu
-	int menuCommand = 0;
-	// command input for type of search
-	int searchCommand = 0;
+	string menuCommand;
 	// variables for adding student
 	string newName, newId, newEmail;
 	// id of student to remove
@@ -313,120 +359,178 @@ int main() {
 
 	cout << endl;
 	cout << "Welcome to the Class Roll Maintenance System!" << endl;
+
+	classRoll.displayMenu();
 	cout << endl;
 
-	cout << "1. Display students in system" << endl;
-	cout << "2. Add student" << endl;
-	cout << "3. Remove student" << endl;
-	cout << "4. Search for student" << endl;
-	cout << "5. Edit student" << endl;
-	cout << "6. Exit the system" << endl;
+	cout << "Command number: ";
+	getline(cin, menuCommand);
+	cout << endl;
+
+	// variable for string converted to int
+	// fool-proofs menu so user can't break program
+	int menuCommandInt = atoi(menuCommand.c_str());
 
 	// loop menu until user wants to exit
-	while (menuCommand != 6) {
-		cout << endl;
-		cout << "Command number: ";
-		cin >> menuCommand;
-
+	while (menuCommandInt != 8) {
 		// switch statement for menu command
-		switch (menuCommand) {
+		switch (menuCommandInt) {
 			// display students
 			case 1:
 				cout << "Displaying system..." << endl;
+				cout << endl;
+
 				classRoll.displayStudents();
+
+				// cin.ignore() makes user have to hit enter to continue
+				cin.ignore();
+				// display the menu after whatever the user does to remind them of commands
 				classRoll.displayMenu();
+
+				// always ask for new command after each case to see what the user wants to do next
+				cout << endl;
+				cout << "Command number: ";
+				getline(cin, menuCommand);
+				menuCommandInt = atoi(menuCommand.c_str());
 				break;
 
 			// add student
 			case 2:
 				cout << "Adding student..." << endl;
+				cout << endl;
+
 				cout << "Name: ";
-				cin >> newName;
+				getline(cin, newName);
+
 				cout << "UID: ";
-				cin >> newId;
+				getline(cin, newId);
+
 				cout << "Email: ";
-				cin >> newEmail;
+				getline(cin, newEmail);
 
 				classRoll.addStudent(newName, newId, newEmail);
+
+				cin.ignore();
 				classRoll.displayMenu();
+				
+				cout << endl;
+				cout << "Command number: ";
+				getline(cin, menuCommand);
+				menuCommandInt = atoi(menuCommand.c_str());
 				break;
 
 			// remove student
 			case 3:
 				cout << "Removing student..." << endl;
-				cout << "UID: ";
-				cin >> removeId;
+				cout << endl;
+
+				cout << "UID of student you'd like to remove: ";
+				getline(cin, removeId);
 
 				classRoll.removeStudent(removeId);
-				classRoll.displayMenu();
-				break;
 
-			// search student
-			case 4:
-				cout << "What would you like to search by?" << endl;
-				cout << "1. Name" << endl;
-				cout << "2. UID" << endl;
-				cout << "3. Email" << endl;
+				cin.ignore();
+				classRoll.displayMenu();
+
 				cout << endl;
 				cout << "Command number: ";
-				cin >> searchCommand;
+				getline(cin, menuCommand);
+				menuCommandInt = atoi(menuCommand.c_str());
+				break;
 
-				// switch statement for search command
-				switch (searchCommand) {
-					case 1:
-						cout << "Searching for student by name..." << endl;
-						cout << "Name: ";
-						cin >> searchName;
+			// search student by name
+			case 4:
+				cout << "Searching for student by name..." << endl;
+				cout << endl;
 
-						classRoll.searchByName(searchName);
-						break;
+				cout << "Name: ";
+				getline(cin, searchName);
 
-					case 2:
-						cout << "Searching for student by UID..." << endl;
-						cout << "UID: ";
-						cin >> searchId;
+				classRoll.searchByName(searchName);
 
-						classRoll.searchById(searchId);
-						break;
-
-					case 3:
-						cout << "Searching by email..." << endl;
-						cout << "Email: " << endl;
-						cin >> searchEmail;
-
-						classRoll.searchByEmail(searchEmail);
-						break;
-
-					default:
-						cout << "ERROR: invalid command." << endl;
-						break;
-				}
-				// end switch for search command
-
+				cin.ignore();
 				classRoll.displayMenu();
+
+				cout << endl;
+				cout << "Command number: ";
+				getline(cin, menuCommand);
+				menuCommandInt = atoi(menuCommand.c_str());
+				break;
+
+			// search student by id
+			case 5:
+				cout << "Searching for student by UID..." << endl;
+				cout << endl;
+
+				cout << "UID: ";
+				getline(cin, searchId);
+
+				classRoll.searchById(searchId);
+
+				cin.ignore();
+				classRoll.displayMenu();
+
+				cout << endl;
+				cout << "Command number: ";
+				getline(cin, menuCommand);
+				menuCommandInt = atoi(menuCommand.c_str());
+				break;
+
+			// search student by email
+			case 6:
+				cout << "Searching by email..." << endl;
+				cout << endl;
+
+				cout << "Email: ";
+				getline(cin, searchEmail);
+
+				classRoll.searchByEmail(searchEmail);
+
+				cin.ignore();
+				classRoll.displayMenu();
+
+				cout << endl;
+				cout << "Command number: ";
+				getline(cin, menuCommand);
+				menuCommandInt = atoi(menuCommand.c_str());
 				break;
 
 			// edit student
-			case 5:
+			case 7:
 				cout << "Editing student..." << endl;
-				cout << "UID: ";
-				cin >> editId;
+				cout << endl;
+
+				cout << "UID of student you'd like to edit: ";
+				getline(cin, editId);
 
 				classRoll.editStudent(editId);
-				classRoll.displayMenu();
-				break;
 
-			// exit system
-			case 6:
-				cout << "Exiting system..." << endl;
+				cin.ignore();
+				classRoll.displayMenu();
+
+				cout << endl;
+				cout << "Command number: ";
+				getline(cin, menuCommand);
+				menuCommandInt = atoi(menuCommand.c_str());
 				break;
 
 			// error message
 			default:
-				cout << "ERROR: invalid command." << endl;
+				cout << "ERROR: invalid command.";
+				cin.ignore();
+
+				classRoll.displayMenu();
+
+				cout << endl;
+				cout << "Command number: ";
+				getline(cin, menuCommand);
+				menuCommandInt = atoi(menuCommand.c_str());
 				break;
 		}
 	}
+
+	cout << "Exiting system...";
+	cin.ignore();
 
 	return 0;
 }
