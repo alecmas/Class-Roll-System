@@ -31,3 +31,17 @@ Capabilities:
 	- Implemented basic main menu system using while loop and switch statements  
 	- Implemented removeStudent, searchById, searchByEmail, and displayMenu functions 
 	- Started implementation of editStudent (still need to allow grade edits)  
+	
+	09/08/2016 (Ryan)
+	- Implemented transform to lowercase functions to eliminate case-sensitivity issues  
+	
+	09/08/2016 (Alec)  
+	- Cleaned up code and display  
+	- Added cin.ignore() in certain spots so that it's easier for the user to see what happened
+	- Commented code so it should be easier to read
+	- Replaced all cin with getline to allow for spaces  
+	- Implemented conversion from string to int for switch statement so that user can't break it  
+	- Split the search command in the switch statement into individual options (search by name, search by id, etc..)  
+	
+	
+
