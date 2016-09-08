@@ -241,6 +241,8 @@ void RollSystem::removeStudent(string usfId) {
 // editStudent function will find student by UID and then 
 // allow user to reenter student information or editGrades
 //
+// !! Still needs editGrades function implemented !!
+//
 // !! May add functionality to search by name and/or email !!
 //******************************************************************
 void RollSystem::editStudent(string usfId) {
