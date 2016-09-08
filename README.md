@@ -18,6 +18,12 @@ Capabilities:
 	- Retrieve student data based on search by name, ID, or email  
 	- Update any or all data fields  
 
+## Things to do:  
+	- Finish editGrades and editStudent functions  
+	- Set max characters allowed in each input  
+	- Make sure UID is a valid input (Is it all numbers? Is it the proper length?)  
+	- Make sure email is a valid input (Might be too extensive. We could at least check if it contains an @ symbol?)  
+
 ## Log
 	09/01/2016 (Alec)
 	- Created RollSystem class  
