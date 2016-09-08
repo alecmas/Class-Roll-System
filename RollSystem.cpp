@@ -12,6 +12,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm> //transform()
 
 using namespace std;
 
@@ -46,9 +47,11 @@ public:
 void RollSystem::addStudent(string name, string usfId, string email) {
 	bool duplicateId = false;
 	bool duplicateEmail = false;
+	string name2 = name; //Get name entered by user
+	transform(name2.begin(), name2.end(), name2.begin(), tolower); //Converts name to lowercase in case user searches by uppercase and name is lowercase
 
 	student newStudent;
-	newStudent.name = name;
+	newStudent.name = name2; //Store name in lowercase so there are no problems with case sensitivity
 	newStudent.usfId = usfId;
 	newStudent.email = email;
 	newStudent.presGrade = 0;
@@ -111,10 +114,12 @@ void RollSystem::displayStudents() {
 // by their name
 //******************************************************************
 void RollSystem::searchByName(string name) {
+	string name2 = name; //Get name entered by user
+	transform(name2.begin(), name2.end(), name2.begin(), tolower); //Converts name to lowercase in case user searches by uppercase and name is lowercase
 	bool foundName = false;
 
 	for (int i = 0; i < students.size(); i++) {
-		if (students[i].name == name) {
+		if (students[i].name == name || students[i].name == name2) {
 			foundName = true;
 
 			cout << endl;
