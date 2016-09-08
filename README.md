@@ -29,5 +29,5 @@ Capabilities:
 	09/06/2016 (Alec)
 	- Scrapped hash table implementation for a vector implementation (will be easier to search multiple ways)  
 	- Implemented basic main menu system using while loop and switch statements  
-	- Implemented removeStudent, searchByName, searchById, searchByEmail, and displayMenu functions 
+	- Implemented removeStudent, searchById, searchByEmail, and displayMenu functions 
 	- Started implementation of editStudent (still need to allow grade edits)  
