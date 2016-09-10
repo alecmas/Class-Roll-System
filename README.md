@@ -19,7 +19,6 @@ Capabilities:
 	- Update any or all data fields  
 
 ## Things to do  
-	- Finish editGrades and editStudent functions  
 	- Set max characters allowed in each input  
 	- Make sure UID is a valid input (Is it all numbers? Is it the proper length?)  
 	- Make sure email is a valid input (Might be too extensive. We could at least check if it contains an @ symbol?)  
@@ -48,6 +47,15 @@ Capabilities:
 	- Replaced all cin with getline to allow for spaces  
 	- Implemented conversion from string to int for switch statement so that user can't break it  
 	- Split the search command in the switch statement into individual options (search by name, search by id, etc..)  
+	
+	09/10/2016 (Alec)  
+	- Renamed displayStudents to displaySystem to avoid confusion with a new function  
+	- Implemented displayStudent function  
+	- Made console display much prettier using iomanip functions such as setw  
+	- Split editStudent function into two parts: editInfo and editGrades  
+	- Created menu for editStudent function to select either editInfo or editGrades  
+	- Implemented validateGrade function  
+	- Finished editStudent and editGrades functions  
 	
 	
 
