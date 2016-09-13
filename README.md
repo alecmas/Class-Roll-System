@@ -19,8 +19,6 @@ Capabilities:
 	- Update any or all data fields  
 
 ## Things to do  
-	- Set max characters allowed in each input  
-	- Make sure UID is a valid input (Is it all numbers? Is it the proper length?)  
 
 ## Log
 	09/01/2016 (Alec)
@@ -60,6 +58,12 @@ Capabilities:
 	- Used .find() to validate email by searching for "@" in user input (addStudent, editStudent)  
 	- Moved display of "Info edit successful!" in case of invalid email input  
 	- Converted name and email to lowercase in editStudent function  
+	
+	09/13/2016 (Alec)  
+	- Condensed validation for name, UID, and email inputs into a single function called validateStudent  
+	- Finished validateStudent function  
+	- Reorganized functions 
+	- Renamed some variables to make them easier to understand  
 	
 	
 
