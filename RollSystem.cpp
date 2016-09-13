@@ -80,6 +80,14 @@ void RollSystem::addStudent(string name, string usfId, string email) {
 	}
 	// else there were no duplicate ids or emails
 	else {
+		size_t found = email.find("@"); //Make sure email contains '@' character
+		if (found == string::npos) //Returns npos if character not found
+		{
+			cout << endl;
+			cout << "ERROR: invalid email." << endl;
+			return;
+		}
+
 		// create student
 		student newStudent;
 
@@ -276,10 +284,28 @@ void RollSystem::editInfo(int indexToEdit) {
 	cout << "New email: ";
 	getline(cin, newEmail);
 
+	size_t found = newEmail.find("@"); //Make sure email contains '@' character
+	if (found == string::npos) //Returns npos if character not found
+	{
+		cout << endl;
+		cout << "ERROR: invalid email." << endl;
+		return;
+	}
+
+	// transform user's name input to lowercase to eliminate case-sensitivity issues
+	transform(newName.begin(), newName.end(), newName.begin(), ::tolower);
+
+	// transform user's email input to all lowercase to eliminate case-sensitivity issues
+	transform(newEmail.begin(), newEmail.end(), newEmail.begin(), ::tolower);
+
 	// update information of the student at the saved index
 	students[indexToEdit].name = newName;
 	students[indexToEdit].usfId = newId;
 	students[indexToEdit].email = newEmail;
+
+	//Moved this here in case user enters a new invalid email
+	cout << endl;
+	cout << "Info edit successful!" << endl;
 }
 
 //******************************************************************
@@ -413,9 +439,7 @@ void RollSystem::editStudent(string usfId) {
 
 		switch(commandInt) {
 			case 1:
-				editInfo(indexToEdit);
-				cout << endl;
-				cout << "Info edit successful!" << endl;
+				editInfo(indexToEdit);				
 				break;
 
 			case 2:
