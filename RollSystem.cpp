@@ -36,19 +36,93 @@ public:
 	// vector to hold students
 	vector<student> students;
 
+	bool validateStudent(string name, string email, string usfId);
+	bool validateGrade(int grade);
+
 	void addStudent(string name, string usfId, string email);
-	void displaySystem();
-	void displayStudent(int index);
+	void removeStudent(string usfId);
+
 	void searchByName(string name);
 	void searchById(string usfId);
 	void searchByEmail(string email);
-	void removeStudent(string usfId);
-	void editInfo(int indexToEdit);
-	bool validateGrade(int newGrade);
-	void editGrades(int indexToEdit);
+
+	void editInfo(int index);
+	void editGrades(int index);
 	void editStudent(string usfId);
+
+	void displaySystem();
+	void displayStudent(int index);
 	void displayMenu();
 };
+
+//******************************************************************
+// validateStudent function will check to see if name, UID,
+// and email are all valid inputs
+//******************************************************************
+bool RollSystem::validateStudent(string name, string email, string usfId) {
+	// if name is not a valid length
+	if (name.size() == 0 || name.size() > 40) {
+		cout << endl;
+		cout << "ERROR: invalid name. Names must contain between 1 and 40 characters" << endl;
+		return false;
+	}
+
+	// if UID is not a valid length
+	if (usfId.size() != 8) {
+		cout << endl;
+		cout << "ERROR: invalid UID. UID must be exactly 8 characters" << endl;
+		return false;
+	}
+
+	// find if UID contains all numbers
+	size_t numberFound = usfId.find_first_not_of("0123456789");
+
+	// if all characters are numbers, numberFound will equal npos
+	if (numberFound != string::npos) {
+		cout << endl;
+		cout << "ERROR: invalid UID. UID consists of numbers only" << endl;
+		return false;
+	}
+
+	// find if email contains '@' character
+	size_t atFound = email.find("@");
+
+	// if @ not found, atFound will equal npos
+	if (atFound == string::npos) {
+		cout << endl;
+		cout << "ERROR: invalid email. Email addresses must contain an @ symbol" << endl;
+		return false;
+	}
+
+	// if email is not a valid length
+	if (email.size() < 3 || email.size() > 40) {
+		cout << endl;
+		cout << "ERROR: invalid email. Email addresses must contain between 3 and 40 characters" << endl;
+		return false;
+	}
+
+	return true;
+}
+
+//******************************************************************
+// validateGrade function makes sure grade input is valid
+// (between 0 and 4)
+//******************************************************************
+bool RollSystem::validateGrade(int grade) {
+	// if newGrade is out of range, print error and fail the grade edit
+	if (grade < 0 || grade > 4) {
+		cout << endl;
+		cout << "ERROR: Please enter a grade value between 0 and 4\n";
+		
+		cout << endl;
+		cout << "Grade edit failed!" << endl;
+
+		return false;
+	}
+	else {
+		return true;
+	}
+}
 
 //******************************************************************
 // addStudent function will create a student
@@ -73,21 +147,21 @@ void RollSystem::addStudent(string name, string usfId, string email) {
 	if (duplicateId == true) {
 		cout << endl;
 		cout << "ERROR: a student with that UID is already in the system.\n";
+		return;
 	}
 	else if (duplicateEmail == true) {
 		cout << endl;
 		cout << "ERROR: a student with that email is already in the system.\n";
+		return;
 	}
-	// else there were no duplicate ids or emails
-	else {
-		size_t found = email.find("@"); //Make sure email contains '@' character
-		if (found == string::npos) //Returns npos if character not found
-		{
-			cout << endl;
-			cout << "ERROR: invalid email." << endl;
-			return;
-		}
 
+	// validate email and name
+	else if (validateStudent(name, email, usfId) == false) {
+		return;
+	}
+
+	// else there were no errors
+	else {
 		// create student
 		student newStudent;
 
@@ -116,51 +190,34 @@ void RollSystem::addStudent(string name, string usfId, string email) {
 }
 
 //******************************************************************
-// displaySystem function will display all students currently 
-// in the system, as well as their information
+// removeStudent function will find a student by UID
+// and remove that student from the system
 //******************************************************************
-void RollSystem::displaySystem() {
-	// variable to keep count of students in system
-	int count = 0;
+void RollSystem::removeStudent(string usfId) {
+	// variable to make sure student is in the system
+	bool foundStudent = false;
+	// variable to hold index of the student to be removed
+	int indexToRemove;
 
-	cout << "--------------------------------------------------------------------------------------------------\n";
-	cout << "| " << setw(40) << left << "Name" << "| " << setw(10) << left << "UID" << "| " << setw(40) << "Email " << " |" << endl;
-	cout << "--------------------------------------------------------------------------------------------------\n";
-
-	// iterate through students vector and print all students
+	// iterate through students vector to find the student to be removed
 	for (int i = 0; i < students.size(); i++) {
-		count++;
-		cout << "| " << setw(40) << left << students[i].name << "| " << setw(10) << left << students[i].usfId << "| " << setw(40) << students[i].email << " |" << endl;
+		if (students[i].usfId == usfId) {
+			foundStudent = true;
+			indexToRemove = i;
+		}
 	}
 
-	if (count == 0) {
-		cout << "System contains no students" << endl;
-		cout << "--------------------------------------------------------------------------------------------------\n";
+	if (foundStudent == false) {
+		cout << endl;
+		cout << "ERROR: student you wish to remove is not in the system\n";
 	}
 	else {
-		cout << "--------------------------------------------------------------------------------------------------\n";
-		cout << "| TOTAL STUDENTS: " << setw(78) << count << " |" << endl;
-		cout << "--------------------------------------------------------------------------------------------------\n";
-	}
-}
+		// erase the student at the saved index
+		students.erase(students.begin() + indexToRemove);
 
-//******************************************************************
-// displayStudent function will display a single student's
-// information and grades
-//******************************************************************
-void RollSystem::displayStudent(int index) {
-	cout << "--------------------------------------------------\n";
-	cout << "| " << setw(45) << left << "STUDENT " << index + 1 << " |" << endl;
-	cout << "--------------------------------------------------\n";
-	cout << "| " << "Name:" << setw(41) << right << students[index].name << " |" << endl;
-	cout << "| " << "UID:" << setw(42) << right << students[index].usfId << " |" << endl;
-	cout << "| " << "Email:" << setw(40) << right << students[index].email << " |" << endl;
-	cout << "| " << setw(48) << " |" << endl;
-	cout << "| " << setw(45) << left << "Presentation Grade: " << students[index].presGrade << " |" << endl;
-	cout << "| " << setw(45) << left << "Essay 1 Grade: " << students[index].e1Grade << " |" << endl;
-	cout << "| " << setw(45) << left << "Essay 2 Grade: " << students[index].e2Grade << " |" << endl;
-	cout << "| " << setw(45) << left << "Project Grade: " << students[index].projGrade << " |" << endl;
-	cout << "--------------------------------------------------\n";
+		cout << endl;
+		cout << "Removal successful!\n";
+	}
 }
 
 //******************************************************************
@@ -237,43 +294,10 @@ void RollSystem::searchByEmail(string email) {
 }
 
 //******************************************************************
-// removeStudent function will find a student by UID
-// and remove that student from the system
-//
-// !! May add functionality to remove by name and/or email !!
-//******************************************************************
-void RollSystem::removeStudent(string usfId) {
-	// variable to make sure student is in the system
-	bool foundStudent = false;
-	// variable to hold index of the student to be removed
-	int indexToRemove;
-
-	// iterate through students vector to find the student to be removed
-	for (int i = 0; i < students.size(); i++) {
-		if (students[i].usfId == usfId) {
-			foundStudent = true;
-			indexToRemove = i;
-		}
-	}
-
-	if (foundStudent == false) {
-		cout << endl;
-		cout << "ERROR: student you wish to remove is not in the system\n";
-	}
-	else {
-		// erase the student at the saved index
-		students.erase(students.begin() + indexToRemove);
-
-		cout << endl;
-		cout << "Removal successful!\n";
-	}
-}
-
-//******************************************************************
 // editInfo function will edit student's information
-// (name, id, email)
+// (name, UID, email)
 //******************************************************************
-void RollSystem::editInfo(int indexToEdit) {
+void RollSystem::editInfo(int index) {
 	// variables for the new information
 	string newName, newId, newEmail;
 
@@ -284,114 +308,84 @@ void RollSystem::editInfo(int indexToEdit) {
 	cout << "New email: ";
 	getline(cin, newEmail);
 
-	size_t found = newEmail.find("@"); //Make sure email contains '@' character
-	if (found == string::npos) //Returns npos if character not found
-	{
-		cout << endl;
-		cout << "ERROR: invalid email." << endl;
+	// validate new email
+	if (validateStudent(newName, newEmail, newId) == false) {
 		return;
 	}
-
-	// transform user's name input to lowercase to eliminate case-sensitivity issues
-	transform(newName.begin(), newName.end(), newName.begin(), ::tolower);
-
-	// transform user's email input to all lowercase to eliminate case-sensitivity issues
-	transform(newEmail.begin(), newEmail.end(), newEmail.begin(), ::tolower);
+ 
+ 	// transform user's name input to lowercase to eliminate case-sensitivity issues
+ 	transform(newName.begin(), newName.end(), newName.begin(), ::tolower);
+ 
+ 	// transform user's email input to all lowercase to eliminate case-sensitivity issues
+ 	transform(newEmail.begin(), newEmail.end(), newEmail.begin(), ::tolower);
 
 	// update information of the student at the saved index
-	students[indexToEdit].name = newName;
-	students[indexToEdit].usfId = newId;
-	students[indexToEdit].email = newEmail;
+	students[index].name = newName;
+	students[index].usfId = newId;
+	students[index].email = newEmail;
 
-	//Moved this here in case user enters a new invalid email
-	cout << endl;
-	cout << "Info edit successful!" << endl;
-}
-
-//******************************************************************
-// validateGrade function makes sure grade input is valid
-// (between 0 and 4)
-//******************************************************************
-bool RollSystem::validateGrade(int newGrade) {
-	// if newGrade is out of range, print error and fail the grade edit
-	if (newGrade < 0 || newGrade > 4) {
-		cout << endl;
-		cout << "ERROR: Please enter a grade value between 0 and 4\n";
-		
-		cout << endl;
-		cout << "Grade edit failed!" << endl;
-
-		return false;
-	}
-	else {
-		return true;
-	}
+ 	cout << endl;
+ 	cout << "Info edit successful!" << endl;
 }
 
 //******************************************************************
 // editGrades function will edit student's grades
 //******************************************************************
-void RollSystem::editGrades(int indexToEdit) {
+void RollSystem::editGrades(int index) {
 	// variables for new grades
 	string newPresGrade, newE1Grade, newE2Grade, newProjGrade;
-	// variable to check if grade is valid
-	bool isValid = true;
 
 	// prompt user for input
+	cout << endl;
+	cout << "Please enter all grades as numeric values according to the following scale:" << endl;
+	cout << "4 = A, 3 = B, 2 = C, 1 = D, 0 = F" << endl;
+	cout << endl;
+
 	cout << "New Presentation grade: ";
 	getline(cin, newPresGrade);
 	// convert input to int to prevent errors
 	int presGradeInt = atoi(newPresGrade.c_str());
 
-	// validate user input
-	isValid = validateGrade(presGradeInt);
-
 	// if input is not valid, exit the function
-	if (isValid == false) {
+	if (validateGrade(presGradeInt) == false) {
 		return;
 	}
-	// else, make the edit
+	// else make the edit
 	else {
-		students[indexToEdit].presGrade = presGradeInt;
+		students[index].presGrade = presGradeInt;
 	}
 
 	cout << "New Essay 1 grade: ";
 	getline(cin, newE1Grade);
 	int e1GradeInt = atoi(newE1Grade.c_str());
 
-	isValid = validateGrade(e1GradeInt);
-
-	if (isValid == false) {
+	if (validateGrade(e1GradeInt) == false) {
 		return;
 	}
 	else {
-		students[indexToEdit].e1Grade = e1GradeInt;
+		students[index].e1Grade = e1GradeInt;
 	}
 
 	cout << "New Essay 2 grade: ";
 	getline(cin, newE2Grade);
 	int e2GradeInt = atoi(newE2Grade.c_str());
 
-	isValid = validateGrade(e2GradeInt);
-
-	if (isValid == false) {
+	if (validateGrade(e2GradeInt) == false) {
 		return;
 	}
 	else {
-		students[indexToEdit].e2Grade = e2GradeInt;
+		students[index].e2Grade = e2GradeInt;
 	}
 
 	cout << "New Project grade: ";
 	getline(cin, newProjGrade);
 	int projGradeInt = atoi(newProjGrade.c_str());
-
-	isValid = validateGrade(projGradeInt);
 	
-	if (isValid == false) {
+	if (validateGrade(projGradeInt) == false) {
 		return;
 	}
 	else {
-		students[indexToEdit].projGrade = projGradeInt;
+		students[index].projGrade = projGradeInt;
 	}
 
 	// if the function makes it this far, the edit was successful
@@ -402,8 +396,6 @@ void RollSystem::editGrades(int indexToEdit) {
 //******************************************************************
 // editStudent function will find student by UID and then 
 // prompt user to editInfo or editGrades
-//
-// !! May add functionality to search by name and/or email !!
 //******************************************************************
 void RollSystem::editStudent(string usfId) {
 	// variable to make sure student is in the system
@@ -439,7 +431,7 @@ void RollSystem::editStudent(string usfId) {
 
 		switch(commandInt) {
 			case 1:
-				editInfo(indexToEdit);				
+				editInfo(indexToEdit);
 				break;
 
 			case 2:
@@ -447,7 +439,6 @@ void RollSystem::editStudent(string usfId) {
 				break;
 
 			default:
-				cout << endl;
 				cout << "ERROR: invalid command." << endl;
 				break;
 		}
@@ -455,7 +446,57 @@ void RollSystem::editStudent(string usfId) {
 }
 
 //******************************************************************
-// displaySystem function will display the menu to remind
+// displaySystem function will display all students currently 
+// in the system, as well as their information
+//******************************************************************
+void RollSystem::displaySystem() {
+	// variable to keep count of students in system
+	int count = 0;
+
+	cout << "--------------------------------------------------------------------------------------------------\n";
+	cout << "| " << setw(40) << left << "Name" << "| " << setw(10) << left << "UID" << "| " << setw(40) << "Email " << " |" << endl;
+	cout << "--------------------------------------------------------------------------------------------------\n";
+
+	// iterate through students vector and print all students
+	for (int i = 0; i < students.size(); i++) {
+		count++;
+		cout << "| " << setw(40) << left << students[i].name << "| " << setw(10) << left << students[i].usfId << "| " << setw(40) << students[i].email << " |" << endl;
+	}
+
+	if (count == 0) {
+		cout << "| System contains no students" << setw(69) << right << " |" << endl;
+		cout << "--------------------------------------------------------------------------------------------------\n";
+	}
+	else {
+		cout << "--------------------------------------------------------------------------------------------------\n";
+		cout << "| TOTAL STUDENTS: " << setw(78) << count << " |" << endl;
+		cout << "--------------------------------------------------------------------------------------------------\n";
+		cout << endl;
+		cout << "NOTE: if you would like to see a student's grades, please search for them individually" << endl;
+	}
+}
+
+//******************************************************************
+// displayStudent function will display a single student's
+// information and grades
+//******************************************************************
+void RollSystem::displayStudent(int index) {
+	cout << "--------------------------------------------------\n";
+	cout << "| " << setw(45) << left << "STUDENT " << index + 1 << " |" << endl;
+	cout << "--------------------------------------------------\n";
+	cout << "| " << "Name:" << setw(41) << right << students[index].name << " |" << endl;
+	cout << "| " << "UID:" << setw(42) << right << students[index].usfId << " |" << endl;
+	cout << "| " << "Email:" << setw(40) << right << students[index].email << " |" << endl;
+	cout << "| " << setw(48) << " |" << endl;
+	cout << "| " << setw(45) << left << "Presentation Grade: " << students[index].presGrade << " |" << endl;
+	cout << "| " << setw(45) << left << "Essay 1 Grade: " << students[index].e1Grade << " |" << endl;
+	cout << "| " << setw(45) << left << "Essay 2 Grade: " << students[index].e2Grade << " |" << endl;
+	cout << "| " << setw(45) << left << "Project Grade: " << students[index].projGrade << " |" << endl;
+	cout << "--------------------------------------------------\n";
+}
+
+//******************************************************************
+// displayMenu function will display the menu to remind
 // the user what commands are valid
 //******************************************************************
 void RollSystem::displayMenu() {
@@ -487,7 +528,7 @@ int main() {
 	// id of student to edit
 	string editId;
 
-	/* TESTING PURPOSES
+	/* TESTING //
 	classRoll.addStudent("Alexander Mas", "00000000", "alexanderm@mail.usf.edu");
 	classRoll.addStudent("Geoffrey Kohlhase", "11111111", "gk@mail.usf.edu");
 	classRoll.addStudent("David Cap", "22222222", "dc@mail.usf.edu");
