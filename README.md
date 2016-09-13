@@ -21,7 +21,6 @@ Capabilities:
 ## Things to do  
 	- Set max characters allowed in each input  
 	- Make sure UID is a valid input (Is it all numbers? Is it the proper length?)  
-	- Make sure email is a valid input (Might be too extensive. We could at least check if it contains an @ symbol?)  
 
 ## Log
 	09/01/2016 (Alec)
@@ -56,6 +55,11 @@ Capabilities:
 	- Created menu for editStudent function to select either editInfo or editGrades  
 	- Implemented validateGrade function  
 	- Finished editStudent and editGrades functions  
+	
+	09/12/2016 (Ryan)  
+	- Used .find() to validate email by searching for "@" in user input (addStudent, editStudent)  
+	- Moved display of "Info edit successful!" in case of invalid email input  
+	- Converted name and email to lowercase in editStudent function  
 	
 	
 
