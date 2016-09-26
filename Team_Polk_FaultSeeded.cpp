@@ -16,6 +16,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#define else
 
 using namespace std;
 
