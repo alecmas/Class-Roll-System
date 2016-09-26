@@ -1,5 +1,5 @@
 //*****************************************************************
-//  RollSystem.cpp
+//  Team_Polk_NoFault.cpp
 //  A small class-roll maintenance system
 //
 //  Programmers: Ryan Binder, Constance Luong, Elin Cheung, 
