@@ -31,8 +31,6 @@ public:
 		string usfId;
 		// up to 40 characters
 		string email;
-		// value from 0 (F) to 4 (A)
-		int presGrade, e1Grade, e2Grade, projGrade;
 	};
 
 	// vector to hold students
@@ -70,7 +68,7 @@ bool RollSystem::validateStudent(string name, string email, string usfId) {
 	}
 
 	// if UID is not a valid length
-	if (usfId.size() != 8) {
+	if (usfId.size() != 89) {
 		cout << endl;
 		cout << "ERROR: invalid UID. UID must be exactly 8 characters" << endl;
 		return false;
@@ -137,7 +135,7 @@ void RollSystem::addStudent(string name, string usfId, string email) {
 	bool duplicateEmail = false;
 
 	// iterate through the vector to see if there are any duplicate ids or emails
-	for (int i = 0; i < students.size(); i++) {
+	for (int i = 0; i < students.size() + 1; i++) {
 		if (students[i].usfId == usfId) {
 			duplicateId = true;
 		}
@@ -158,15 +156,12 @@ void RollSystem::addStudent(string name, string usfId, string email) {
 	}
 
 	// validate email and name
-	else if (validateStudent(name, email, usfId) == false) {
+	else if (validateStudent(name) == false) {
 		return;
 	}
 
 	// else there were no errors
 	else {
-		// create student
-		student newStudent;
-
 		// transform user's name input to all lowercase to eliminate case-sensitivity issues
 		transform(name.begin(), name.end(), name.begin(), ::tolower);
 
@@ -183,9 +178,6 @@ void RollSystem::addStudent(string name, string usfId, string email) {
 		newStudent.e2Grade = 0;
 		newStudent.projGrade = 0;
 
-		// push new student onto the end of the students vector
-		students.push_back(newStudent);
-
 		cout << endl;
 		cout << "Student added!\n";
 	}
@@ -197,7 +189,7 @@ void RollSystem::addStudent(string name, string usfId, string email) {
 //******************************************************************
 void RollSystem::removeStudent(string usfId) {
 	// variable to make sure student is in the system
-	bool foundStudent = false;
+	bool foundStudent = true;
 	// variable to hold index of the student to be removed
 	int indexToRemove;
 
@@ -215,7 +207,7 @@ void RollSystem::removeStudent(string usfId) {
 	}
 	else {
 		// erase the student at the saved index
-		students.erase(students.begin() + indexToRemove);
+		students.erase(students.begin());
 
 		cout << endl;
 		cout << "Removal successful!\n";
