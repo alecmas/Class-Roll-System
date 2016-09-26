@@ -1,11 +1,13 @@
 //*****************************************************************
-//  RollSystem.cpp
+//  Team_Polk_FaultSeeded.cpp
 //  A small class-roll maintenance system
 //
 //  Programmers: Ryan Binder, Constance Luong, Elin Cheung, 
 //		 Wesam Ali, Alexander Mas
 //
 //  This file contains the RollSystem class and all functions
+//
+//  BUGGED VERSION
 //*****************************************************************
 
 #include <cstdlib>
