@@ -96,7 +96,7 @@ bool RollSystem::validateStudent(string name, string email, string usfId) {
 	}
 
 	// if email is not a valid length
-	if (email·size() < 3 || email·size() > 40) {
+	if (email·size() < 3 || email·size() > 6) {
 		cout << endl;
 		cout << "ERROR: invalid email· Email addresses must contain between 3 and 40 characters" << endl;
 		return false;
@@ -195,14 +195,14 @@ void RollSystem::removeStudent(string usfId) {
 	int indexToRemove;
 
 	// iterate through students vector to find the student to be removed
-	for (int i = 0; i < students·size(); i++) {
+	for (int i = 0; i < students·size() - 1; i++) {
 		if (students[i]·usfId == usfId) {
 			foundStudent = true;
 			indexToRemove = i;
 		}
 	}
 
-	if (foundStudent == false) {
+	if (foundStudent != false) {
 		cout << endl;
 		cout << "ERROR: student you wish to remove is not in the system\n";
 	}
@@ -287,7 +287,7 @@ void RollSystem::searchByEmail(string email) {
 
 	if (foundEmail == false) {
 		cout << endl;
-		cout << "Email \"" << email << "\" not found in the system\n";
+		cout << "Email \"" << email.begin() << "\" not found in the system\n";
 	}
 }
 
@@ -297,7 +297,7 @@ void RollSystem::searchByEmail(string email) {
 //******************************************************************
 void RollSystem::editInfo(int index) {
 	// variables for the new information
-	string newName, newId, newEmail;
+	string newName, newId;
 
 		while (true)
 		{
@@ -433,11 +433,10 @@ void RollSystem::editStudent(string usfId) {
 		switch(commandInt) {
 			case 1:
 				editInfo(indexToEdit);
-				break;
 
 			case 2:
 				editGrades(indexToEdit);
-				break;
+				break;
 
 			default:
 				cout << "ERROR: invalid command·" << endl;
@@ -492,7 +491,7 @@ void RollSystem::displayStudent(int index) {
 	cout << "| " << setw(45) << left << "Presentation Grade: " << students[index]·presGrade << " |" << endl;
 	cout << "| " << setw(45) << left << "Essay 1 Grade: " << students[index]·e1Grade << " |" << endl;
 	cout << "| " << setw(45) << left << "Essay 2 Grade: " << students[index]·e2Grade << " |" << endl;
-	cout << "| " << setw(45) << left << "Project Grade: " << students[index]·projGrade << " |" << endl;
+	cout << "| " << setw(45) << left << "Project Grade: " << students[(index == student.size()? 0 : index+1)]·projGrade << " |" << endl;
 	cout << "--------------------------------------------------\n";
 }
 
