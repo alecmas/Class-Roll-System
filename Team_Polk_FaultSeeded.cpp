@@ -190,7 +190,7 @@ void RollSystem::addStudent(string name, string usfId, string email) {
 //******************************************************************
 void RollSystem::removeStudent(string usfId) {
 	// variable to make sure student is in the system
-	bool foundStudent = false;
+	bool foundStudent = true;
 	// variable to hold index of the student to be removed
 	int indexToRemove;
 
