@@ -36,7 +36,7 @@ public:
 	// vector to hold students
 	vector<student> students;
 
-	bool validateStudent(string name, string email, string usfId);
+	bool validateStudent(string name, string usfId, string email);
 	bool validateGrade(int grade);
 
 	void addStudent(string name, string usfId, string email);
@@ -59,7 +59,7 @@ public:
 // validateStudent function will check to see if name, UID,
 // and email are all valid inputs
 //******************************************************************
-bool RollSystem::validateStudent(string name, string email, string usfId) {
+bool RollSystem::validateStudent(string name, string usfId, string email) {
 	// if name is not a valid length
 	if (name.size() == 0 || name.size() > 40) {
 		cout << endl;
@@ -156,7 +156,7 @@ void RollSystem::addStudent(string name, string usfId, string email) {
 	}
 
 	// validate email and name
-	else if (validateStudent(name, email, usfId) == false) {
+	else if (validateStudent(name, usfId, email) == false) {
 		return;
 	}
 
@@ -309,7 +309,7 @@ void RollSystem::editInfo(int index) {
 	getline(cin, newEmail);
 
 	// validate new email
-	if (validateStudent(newName, newEmail, newId) == false) {
+	if (validateStudent(newName, newId, newEmail) == false) {
 		return;
 	}
  
