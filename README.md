@@ -50,5 +50,6 @@ Programmers: Ryan Binder, Constance Luong, Elin Cheung, Wesam Ali, Alexander Mas
 	- Reorganized functions 
 	- Renamed some variables to make them easier to understand  
 	
-	
+	09/28/2016 (Alec)  
+	- Noticed an inconsistency between validateStudent and addStudent; just rearranged the variables passed into validateStudent  
 
