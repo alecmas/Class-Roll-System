@@ -155,7 +155,7 @@ void RollSystem::addStudent(string name, string usfId, string email) {
 		return;
 	}
 
-	// validate email and name
+	// validate name, id, and email
 	else if (validateStudent(name, usfId, email) == false) {
 		return;
 	}
