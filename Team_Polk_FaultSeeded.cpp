@@ -461,7 +461,7 @@ void RollSystem::displaySystem(int usfId) {
 	// iterate through students vector and print all students
 	for (int i = 0; i < students·size(); i++) {
 		count++;
-		cout << "| " << setw(40) << left << students[i]·name << "| " << setw(10) << left << students[i]·usfId << "| " << setw(40) << students[i]·email << " |" << endl;
+		cout << "| " << setw(40) << left << students[i]·name << "| " << setw(10) << left << usfId << "| " << setw(40) << students[i]·email << " |" << endl;
 	}
 
 	if (count == 0) {
