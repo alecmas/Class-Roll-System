@@ -3,8 +3,6 @@ A small class-roll maintenance system
 
 Programmers: Ryan Binder, Constance Luong, Elin Cheung, Wesam Ali, Alexander Mas
 
-## Things to do  
-	- Bug the code!
 ## Log
 	09/01/2016 (Alec)
 	- Created RollSystem class  
