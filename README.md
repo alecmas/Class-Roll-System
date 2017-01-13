@@ -1,7 +1,7 @@
 # Roll-System
 A small class-roll maintenance system
 
-Programmers: Ryan Binder, Constance Luong, Elin Cheung, Wesam Ali, Alexander Mas
+Programmers: Ryan Binder, Constance Luong, Elin Cheung, Wesam Ali, Alec Mas
 
 ## Log
 	09/01/2016 (Alec)
